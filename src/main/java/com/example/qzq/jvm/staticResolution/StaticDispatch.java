@@ -1,7 +1,7 @@
 package com.example.qzq.jvm.staticResolution;
 
 /**
- * @Description 方法重载与静态分派
+ * @Description 方法重载与静态分派  根据静态类型进行重载
  * @Date 2020/2/19 10:11
  * @Author by qiziqian
  */

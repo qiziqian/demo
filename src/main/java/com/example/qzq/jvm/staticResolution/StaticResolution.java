@@ -8,9 +8,13 @@ package com.example.qzq.jvm.staticResolution;
 public class StaticResolution {
     public static void main(String[] args) {
         sayHello();
+        sayHello("s");
     }
 
     public static void sayHello() {
+        System.out.println("hello world !");
+    }
+    public static void sayHello(String s) {
         System.out.println("hello world !");
     }
 }
