@@ -1,5 +1,8 @@
 package com.example.qzq.demo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import java.text.SimpleDateFormat;
+
 /**
  * @Classname RandomTest
  * @Description
@@ -8,7 +11,6 @@ package com.example.qzq.demo;
  */
 public class RandomTest {
     public static void main(String[] args) {
-
         double min = 0;//最小值
         double max = 30;//总和
         int scl =  1;//小数最大位数
@@ -17,7 +19,6 @@ public class RandomTest {
             double one = Math.floor((Math.random() * max ) * pow) / pow;
             System.out.println(one);
         }
-
     }
 
     public static String getNull() {
