@@ -3,7 +3,11 @@ package com.example.qzq.socket.tcp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
+
 
 /**
  * @Classname SocketClient
@@ -12,33 +16,40 @@ import java.net.Socket;
  * @Created by qiziqian
  */
 public class SocketClient {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        // 要连接的服务端IP地址和端口
-        String host = "192.168.39.12";
-        int port = 502;
-        System.out.println("设置服务器路径 " + host + ":" + port);
-        // 与服务端建立连接
-        Socket socket = new Socket(host, port);
-        socket.setSoTimeout(5000);
-        // 建立连接后获得输出流
-        byte[] bytes = new byte[1024];
-        byte[] bytes1 = {0x01, 0x03, 0x00, 0x00, 0x00, 0x02, (byte) 0xC4, 0x0B};
-        OutputStream outputStream = socket.getOutputStream();
-        outputStream.write(bytes1);
-        int len;
-        InputStream inputStream = socket.getInputStream();
-        while ((len = inputStream.read(bytes)) != -1) {
-            // outputStream.write(message.getBytes("UTF-8"));
-            //注意指定编码格式，发送方和接收方一定要统一，建议使用UTF-8
-            String s = new String(bytes, 0, len, "UTF-8");
-            System.out.println("get message from server: " + s);
+    public static void main(String[] args) throws IOException {
+        try {
+            String ip = "192.168.42.242";
+            int port = 1030;
+//            String ip = "127.0.0.1";
+//            int port = 8888;
+            System.out.println("设置服务器路径 " + ip + ":" + port);
 
+            Socket socket = new Socket();
+            SocketAddress socketAddress = new InetSocketAddress(ip, port);
+            socket.connect(socketAddress, 3000);
+            socket.setSoTimeout(3000);
 
+            byte[] bytes = new byte[100];
+            OutputStream outputStream = socket.getOutputStream();
+            byte[] request = {0x48, 0x3a, 0x01, 0x57, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte) 0xdc, 0x45, 0x44};
+            outputStream.write(request);
+            outputStream.flush();
+            socket.shutdownOutput();
+
+            int len;
+            InputStream inputStream = socket.getInputStream();
+            while ((len = inputStream.read(bytes)) != -1) {
+                socket.shutdownInput();
+            }
+
+            inputStream.close();
+            outputStream.close();
+            socket.close();
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
-        outputStream.close();
-        socket.close();
 
     }
 }

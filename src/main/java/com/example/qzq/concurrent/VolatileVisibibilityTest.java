@@ -11,7 +11,8 @@ public class VolatileVisibibilityTest {
         new Thread(new Runnable() {
             public void run() {
                 while (!init) {
-
+                    //解开下面语句,不用加volatile也可以执行通过
+                    // System.out.println("检查中");
                 }
                 System.out.println("执行完成!");
             }

@@ -28,14 +28,4 @@ public class ConcurrentHashMapTest {
         System.out.println("main:" + map.get(1));
 
     }
-//    public static void main(String[] args) throws InterruptedException {
-//        ExecutorService executorService = Executors.newFixedThreadPool(100);
-//        executorService.execute(() -> {
-//            map.put(1, 1);
-//            System.out.println("main:" + map.get(1));
-//
-//        });
-//        Thread.sleep(3000);
-//        System.out.println( map);
-//    }
 }
