@@ -14,7 +14,7 @@ package com.example.qzq.sortDemo;
 public class QuickSort {
     public static void main(String[] args) {
         int arr[] = {3, 7, 5, 2, 1, 6, 9, 8};
-        Qsort2(arr, 0, arr.length - 1);
+        Qsort1(arr, 0, arr.length - 1);
         //swap(arr,0,1);
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " ");
@@ -25,7 +25,7 @@ public class QuickSort {
     public static void Qsort1(int[] arr, int low, int high) {
         int pivot;
         if (low < high) {
-            pivot = Partition3(arr, low, high);
+            pivot = Partition1(arr, low, high);
             Qsort1(arr, low, pivot - 1);
             Qsort1(arr, pivot + 1, high);
         }

@@ -8,7 +8,7 @@ package com.example.qzq.leetcode;
  */
 public class ListNode {
     public ListNode next;
-    int val;
+    public int val;
 
     ListNode(int x) {
         val = x;
@@ -16,6 +16,4 @@ public class ListNode {
 
     ListNode() {
     }
-
-    ;
 }

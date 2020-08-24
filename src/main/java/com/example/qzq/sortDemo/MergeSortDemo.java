@@ -12,7 +12,7 @@ public class MergeSortDemo {
         int[] array = {21, 5, 32, 54, 74, 68, 110, 654, 315, 4, 3, 0, 57};
         mergeSortStart(array);
         for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
+            System.out.print(array[i] + " ");
         }
     }
 

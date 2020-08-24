@@ -11,12 +11,14 @@ import java.util.Arrays;
  */
 public class 合并两个有序数组 {
     public static void main(String[] args) {
-        int[] a = new int[]{1, 2, 3, 0, 0, 0};
-        int[] b = new int[]{1, 2, 3,};
-        System.arraycopy(b, 0, a, 3, 3);
-        for (int i1 = 0; i1 < a.length; i1++) {
-            System.out.println(a[i1]);
+        int[] a = new int[]{1, 2, 3, 4, 5, 7};
+        int[] b = new int[]{1, 2, 3};
+        for (int i : mergeTest(a, b)) {
+            System.out.print(i + " ");
         }
+//        for (int i1 = 0; i1 < a.length; i1++) {
+//            System.out.println(a[i1]);
+//        }
     }
 
     public static void merge4(int[] nums1, int m, int[] nums2, int n) {
@@ -69,6 +71,30 @@ public class 合并两个有序数组 {
         for (int y : nums1) {
             nums1[y] = list.get(y);
         }
+    }
+
+    public static int[] mergeTest(int[] arr1, int[] arr2) {
+
+        int length1 = arr1.length;
+        int length2 = arr2.length;
+        int[] temp = new int[length1 + length2];
+        int index1 = 0, index2 = 0;
+        int k = 0;
+
+        while (index1 < length1 && index2 < length2) {
+            if (arr1[index1] > arr2[index2]) {
+                temp[k++] = arr2[index2++];
+            } else {
+                temp[k++] = arr1[index1++];
+            }
+        }
+        while (index1 < length1) {
+            temp[k++] = arr1[index1++];
+        }
+        while (index2 < length2) {
+            temp[k++] = arr2[index2++];
+        }
+        return temp;
     }
 
 }
