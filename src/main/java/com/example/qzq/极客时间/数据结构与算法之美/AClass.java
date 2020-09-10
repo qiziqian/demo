@@ -1,4 +1,4 @@
-package com.example.qzq.极客时间;
+package com.example.qzq.极客时间.数据结构与算法之美;
 
 /**
  * @Classname AClass  回调函数->实现复用和扩展
