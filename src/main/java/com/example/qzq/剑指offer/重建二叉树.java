@@ -2,6 +2,9 @@ package com.example.qzq.剑指offer;
 
 import com.example.qzq.leetcode.TreeNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @ClassName : 重建二叉树
  * @Author : qiziqian
@@ -10,24 +13,30 @@ import com.example.qzq.leetcode.TreeNode;
  */
 public class 重建二叉树 {
 
-    public static void main(String[] args) {
-        int[] array = {1, 2, 3, 4, 5, 6, 7};
+    Map<Integer, Integer> indexMap = new HashMap();
+    int[] po;
 
-        int num = array.length;
-        int index = 0;
-        TreeNode node = new TreeNode();
-        //node.left = buildNode(index,num,array);
-        while (index < num) {
-
-            index++;
+    // 2020.09.30  参考别人的答案
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 1) return new TreeNode(preorder[0]);
+        po = preorder;
+        for (int i = 0; i < inorder.length; i++) {
+            indexMap.put(inorder[i], i);
         }
-
+        return recur(0, 0, preorder.length - 1);
     }
 
-//    public static  TreeNode  buildNode(int index,int num,int[] array ){
-//        TreeNode treeNode = new TreeNode(array[index]);
-//        if(index*2 < num) treeNode.left = new TreeNode(array[index*2]);
-//        if(index*2 < num) treeNode.right = new TreeNode(array[index*2+1]);
-//    }
+    public TreeNode recur(int currRoot, int left, int right) {
+        if (left > right) return null;
+
+        int rootIndex = indexMap.get(po[currRoot]);
+
+        TreeNode root = new TreeNode(po[currRoot]);
+
+        root.left = recur(currRoot + 1, left, rootIndex - 1);
+        root.right = recur((currRoot + 1) + (rootIndex - left), rootIndex + 1, right);  //根节点索引+1+左子树长度
+
+        return root;
+    }
 
 }

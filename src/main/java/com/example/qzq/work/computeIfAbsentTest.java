@@ -9,11 +9,15 @@ import java.util.HashMap;
  * @Date: 2020-08-14 17:50
  */
 public class computeIfAbsentTest {
-    public static void main(String[] args) {
-        HashMap<String, String> objectObjectHashMap = new HashMap<>();
-        //objectObjectHashMap.put("123","456");
-        objectObjectHashMap.put("456", "666");
-        objectObjectHashMap.putIfAbsent("123", "777");
-        System.out.println(objectObjectHashMap);
+    public static void main(String[] args) throws InterruptedException {
+
+        String s = null;
+        try {
+            s.equals(123);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getLocalizedMessage());
+            System.out.println(e.toString());
+        }
     }
 }

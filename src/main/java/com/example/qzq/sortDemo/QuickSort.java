@@ -35,16 +35,12 @@ public class QuickSort {
     //优化递归操作和小数组时的操作
     public static void Qsort2(int[] arr, int low, int high) {
         int pivot;
-//        if(high-low<=3){
         while (low < high) {//迭代来控制枢纽右边的数组排序
             pivot = Partition3(arr, low, high);
             //递归来控制枢纽左边的数组排序
             Qsort2(arr, low, pivot - 1);
             low = pivot + 1;
         }
-//        }else{
-//           // StraightInsertion.demo2(arr);
-//        }
     }
 
     //寻找枢纽
@@ -58,7 +54,6 @@ public class QuickSort {
             if (pivot > arr[high]) {
                 swap(arr, low, high);
             }
-
             while (low < high && pivot >= arr[low]) {
                 low++;
             }
