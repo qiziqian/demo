@@ -139,6 +139,30 @@ public class QuickSort {
         return low;
     }
 
+    //表述更清晰的做法?
+    private static int Partition4(int[] arr, int low, int high) {
+        int pivot = arr[low];
+        while (low < high) {
+            while (low < high) {
+                if (pivot > arr[high]) {
+                    arr[low++] = arr[high];
+                    break;
+                }
+                high--;
+            }
+            while (low < high) {
+                if (pivot < arr[low]) {
+                    arr[high--] = arr[low];
+                    break;
+                }
+                low++;
+            }
+        }
+        //将枢纽放在正确的位置
+        arr[low] = pivot;
+        return low;
+    }
+
     //交换位置
     // 2019/9/12 12:35  qiziqian    抑或  相同为0  不同为1
     //  a^a=0   a^0=a   a^b=b^a  a^b^b=a

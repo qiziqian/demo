@@ -25,9 +25,12 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.springframework.util.FileCopyUtils;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -52,6 +55,12 @@ public class HttpClientUtil {
             .setConnectTimeout(20000)
             .setSocketTimeout(20000)
             .build();
+
+    public static void main(String[] args) throws IOException {
+        String s = sendHttpsGet("https://fastgw-ali.ys7.com/1/capture/2020/10/14/l0jxzjiro4w5bgd981xf3bi8.jpg?Expires=1602741783&OSSAccessKeyId=LTAIzI38nEHqg64n&Signature=SHJRN0CRUHdSm3NQWjcXWeGOgHc%3D&bucket=ezviz-fastdfs-gateway",
+                new ArrayList<>(), "");
+        System.out.println(s);
+    }
 
     public static void setTimeout(int timeout) {
         requestConfig = RequestConfig.custom()
@@ -101,6 +110,7 @@ public class HttpClientUtil {
             }
             // 执行请求
             response = httpClient.execute(httpGet);
+
             if (response != null) {
                 return EntityUtils.toString(response.getEntity(), "UTF-8");
             } else {
@@ -121,11 +131,109 @@ public class HttpClientUtil {
         }
     }
 
-    public static void main(String[] args) {
+
+    /**
+     * 发送Get请求Https
+     *
+     * @param httpUrl https://tool.bitefu.net/jiari/
+     * @param params  d=2018
+     * @return
+     * @throws IOException
+     * @throws ClientProtocolException
+     */
+    public static String sendHttpsGet(String httpUrl, List<Header> headers, String params) throws ClientProtocolException, IOException {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse response = null;
+        String responseContent = null;
         try {
-            String s = sendHttpGet("http://127.0.0.1:8888/q", new ArrayList<>(), "");
-        } catch (IOException e) {
-            System.out.println("打印");
+            if (params != null && !params.isEmpty()) {
+                httpUrl = httpUrl + "?" + params;
+            }
+            // 创建get请求
+            HttpGet httpGet = new HttpGet(httpUrl);
+            // 创建默认的httpClient实例.
+            PublicSuffixMatcher publicSuffixMatcher = PublicSuffixMatcherLoader
+                    .load(new URL(httpGet.getURI().toString()));
+            DefaultHostnameVerifier hostnameVerifier = new DefaultHostnameVerifier(publicSuffixMatcher);
+            httpClient = HttpClients.custom().setSSLHostnameVerifier(hostnameVerifier).build();
+            httpGet.setConfig(requestConfig);
+            if (headers != null && !headers.isEmpty()) {
+                for (Header tmp : headers) {
+                    httpGet.addHeader(tmp);
+                }
+            }
+            // 执行请求
+            response = httpClient.execute(httpGet);
+            InputStream inputStream = response.getEntity().getContent();
+            FileOutputStream fileOutputStream = new FileOutputStream(new File("E:\\testPricture.jpg"));
+            FileCopyUtils.copy(inputStream, fileOutputStream);
+            // 读返回数据
+            responseContent = EntityUtils.toString(response.getEntity(), "UTF-8");
+        } finally {
+            try {
+                // 关闭连接,释放资源
+                if (response != null) {
+                    response.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return responseContent;
     }
+
+
+    /**
+     * 发送Post请求 Http
+     *
+     * @param httpUrl 地址
+     * @param params  参数(格式:key1=value1&key2=value2) 使用contentType:  application/x-www-form-urlencoded
+     * @param params  参数(格式:{\"key1\":\"value1\",\"key1\":\"value1\"} 使用contentType:  application/json
+     * @throws IOException
+     * @throws ClientProtocolException
+     */
+    public static String sendHttpPost(String httpUrl, String params, String contentType, List<Header> headers) throws ClientProtocolException, IOException {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse response = null;
+        StringEntity stringEntity = null;
+        String responseContent = null;
+        try {
+            httpClient = HttpClients.createDefault();
+            //创建httpPost
+            HttpPost httpPost = new HttpPost(httpUrl);
+            //设置参数
+            stringEntity = new StringEntity(params, "UTF-8");
+            //发送json数据需要设置contentEncoding
+            stringEntity.setContentType(contentType);
+            stringEntity.setContentEncoding("UTF-8");
+            if (headers != null && !headers.isEmpty()) {
+                for (Header tmp : headers) {
+                    httpPost.addHeader(tmp);
+                }
+            }
+            httpPost.setEntity(stringEntity);
+            httpPost.setConfig(requestConfig);
+            response = httpClient.execute(httpPost);
+            //读返回数据
+            responseContent = EntityUtils.toString(response.getEntity(), "UTF-8");
+        } finally {
+            try {
+                // 关闭连接,释放资源
+                if (response != null) {
+                    response.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return responseContent;
+    }
+
+
 }
