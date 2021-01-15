@@ -13,27 +13,53 @@ import java.util.Arrays;
  */
 public class UdpClient {
     public static void main(String[] args) throws IOException, InterruptedException {
-        DatagramSocket socket = new DatagramSocket(8000);//创建一个发送消息的套接字
+        DatagramSocket socket = new DatagramSocket(4196);//创建一个发送消息的套接字
         byte[] frames = {0x01, 0x03, 0x00, 0x00, 0x00, 0x02, (byte) 0xC4, 0x0B};
-        DatagramPacket packet = new DatagramPacket(frames, frames.length, InetAddress.getByName("192.168.42.247"), 502);
+        //DatagramPacket packet = new DatagramPacket(frames, frames.length, InetAddress.getByName("192.168.42.247"), 502);
         while (true) {
-            System.out.println("发包中...");
-            socket.send(packet);
+            // System.out.println("发包中...");
+            //  socket.send(packet);
 
             byte[] bytes = new byte[20];
             DatagramPacket data = new DatagramPacket(bytes, bytes.length);//创建包接收信息
             socket.receive(data);//接收信息
-            convertAndWrap(data);
-            for (byte datum : data.getData()) {
-                System.out.print(datum + " ");
-            }
-            System.out.println();
+            //convertAndWrap(data);
+            //  System.out.println("收到数据长度:"+data.getLength());
+            verifyData("gate1", data);
+            System.out.println("标签:" + getTag(data.getData()));
+//            for (byte datum : data.getData()) {
+//                System.out.print(datum + " ");
+//            }
+//            System.out.println();
             Arrays.fill(bytes, (byte) 0);
-            Thread.sleep(3000);
+
         }
 
     }
 
+    public static boolean verifyData(String code, DatagramPacket data) {
+        int length = data.getLength();
+        if (length != 5 && length != 12) return false;
+        byte[] realData = Arrays.copyOfRange(data.getData(), 0, length);
+        int crc = realData[length - 1];
+        int crcTest = 0;
+        for (int i = 0; i < length - 1; i++) {
+            crcTest ^= realData[i];
+        }
+        boolean success = crc == crcTest;
+
+        if (!success) System.out.println("读写器: " + code + " 数据校验未通过:" + HexBin.encode(realData));
+        return success;
+    }
+
+    public static int getTag(byte[] bytes) {
+        byte[] realData = Arrays.copyOfRange(bytes, 4, 7);
+        String encode = HexBin.encode(realData);
+        int tag = Integer.parseInt(encode, 16);
+        return tag;
+    }
+
+    //02168F    2 22 -113
     public static void convertAndWrap(DatagramPacket data) {
         //拿到指定数据位
         byte[] humidityBytes = Arrays.copyOfRange(data.getData(), 3, 5);
