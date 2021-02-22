@@ -1,6 +1,6 @@
 package com.example.qzq.剑指offer;
 
-import com.example.qzq.leetcode.ListNode;
+import com.example.qzq.data_structure.ListNode;
 
 /**
  * @ClassName : 反转链表

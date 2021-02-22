@@ -1,6 +1,6 @@
 package com.example.qzq.极客时间.数据结构与算法之美;
 
-import com.example.qzq.leetcode.TreeNode;
+import com.example.qzq.data_structure.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

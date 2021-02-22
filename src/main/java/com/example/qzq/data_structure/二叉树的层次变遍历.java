@@ -1,7 +1,5 @@
 package com.example.qzq.data_structure;
 
-import com.example.qzq.leetcode.TreeNode;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

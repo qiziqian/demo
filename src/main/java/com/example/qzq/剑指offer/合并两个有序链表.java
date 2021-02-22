@@ -1,7 +1,5 @@
 package com.example.qzq.剑指offer;
 
-import com.example.qzq.leetcode.ListNode;
-
 /**
  * @ClassName : 合并两个有序链表
  * @Author : qiziqian

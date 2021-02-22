@@ -1,10 +1,8 @@
 package com.example.qzq.剑指offer;
 
-import com.example.qzq.leetcode.ListNode;
-import com.example.qzq.leetcode.TreeNode;
+import com.example.qzq.data_structure.TreeNode;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 

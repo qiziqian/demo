@@ -1,7 +1,5 @@
 package com.example.qzq.剑指offer;
 
-import com.example.qzq.leetcode.ListNode;
-
 import java.util.LinkedList;
 import java.util.Stack;
 
