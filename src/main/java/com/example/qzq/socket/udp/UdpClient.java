@@ -26,7 +26,7 @@ public class UdpClient {
             //convertAndWrap(data);
             //  System.out.println("收到数据长度:"+data.getLength());
             verifyData("gate1", data);
-            System.out.println("标签:" + getTag(data.getData()));
+            System.out.println("标签:" + getTag(data.getData()) + " 状态: " + getStatus(data.getData()) + " 激活器: " + getActiveId(data.getData()) + " 激活强度: " + getRssi(data.getData()));
 //            for (byte datum : data.getData()) {
 //                System.out.print(datum + " ");
 //            }
@@ -57,6 +57,22 @@ public class UdpClient {
         String encode = HexBin.encode(realData);
         int tag = Integer.parseInt(encode, 16);
         return tag;
+    }
+
+    public static boolean getStatus(byte[] bytes) {
+        byte[] realData = Arrays.copyOfRange(bytes, 7, 8);
+        return realData[0] == (byte) 128;
+    }
+
+    public static int getActiveId(byte[] bytes) {
+        byte[] realData = Arrays.copyOfRange(bytes, 8, 10);
+        int high = (realData[0] & 0b00111111) << 8;
+        int low = realData[1];
+        return high + low;
+    }
+
+    public static int getRssi(byte[] bytes) {
+        return bytes[10];
     }
 
     //02168F    2 22 -113

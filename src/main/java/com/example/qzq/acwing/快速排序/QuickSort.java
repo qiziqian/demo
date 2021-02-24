@@ -26,15 +26,22 @@ public class QuickSort {
         while (i < j) {
             while (q[++i] < x) ;
             while (q[--j] > x) ;
-            if (i < j) swap(q, i, j);
+            if (i < j) {
+                int temp = q[i];
+                q[i] = q[j];
+                q[j] = temp;
+            }
         }
         quickSort(q, l, j);
         quickSort(q, j + 1, r);
     }
 
-    public static void swap(int[] arr, int index1, int index2) {
-        arr[index1] = arr[index1] ^ arr[index2];
-        arr[index2] = arr[index1] ^ arr[index2];
-        arr[index1] = arr[index1] ^ arr[index2];
+    //为什么用j而不是i当做分界点?:确保分段后右侧全部大于左侧
+    public static void main(String[] args) {
+        int[] ints = {2, 3, 5, 1};
+        quickSort(ints, 0, ints.length - 1);
+        for (int n : ints) {
+            System.out.print(n + " ");
+        }
     }
 }

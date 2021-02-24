@@ -1,92 +1,86 @@
 package com.example.qzq.leetcode.并查集;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
- * @Description
- * @Date 2021/1/29 9:15
- * @Author by qiziqian
+ * @ClassName : 最小体力消耗路径
+ * @Author : qiziqian
+ * @Description:
+ * @Date: 2021-01-29 12:50
  */
 public class 最小体力消耗路径 {
+    int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public int minimumEffortPath(int[][] heights) {
         int m = heights.length;
         int n = heights[0].length;
-        List<int[]> edges = new ArrayList<>();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                int[] edge = new int[3];
-                int id = i * m + j;
-                if (i > 0) {
-                    edges.add(new int[]{id - n, id, Math.abs(heights[i][j] - heights[i - 1][j])});
-                }
-                if (j > 0) {
-                    edges.add(new int[]{id - 1, id, Math.abs(heights[i][j] - heights[i][j - 1])});
+        int left = 0, right = 999999, ans = 0;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            Queue<int[]> queue = new LinkedList<int[]>();
+            queue.offer(new int[]{0, 0});
+            boolean[] seen = new boolean[m * n];
+            seen[0] = true;
+            while (!queue.isEmpty()) {
+                int[] cell = queue.poll();
+                int x = cell[0], y = cell[1];
+                for (int i = 0; i < 4; ++i) {
+                    int nx = x + dirs[i][0];
+                    int ny = y + dirs[i][1];
+                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && !seen[nx * n + ny] && Math.abs(heights[x][y] - heights[nx][ny]) <= mid) {
+                        queue.offer(new int[]{nx, ny});
+                        seen[nx * n + ny] = true;
+                    }
                 }
             }
+            if (seen[m * n - 1]) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
         }
-        Collections.sort(edges, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[2] - o2[2];
+        return ans;
+    }
+
+    public int minimumEffortPath2(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+            public int compare(int[] edge1, int[] edge2) {
+                return edge1[2] - edge2[2];
             }
         });
-        UnionSet unionSet = new UnionSet(m * n);
-        for (int[] edge : edges) {
-            int start = edge[0];
-            int end = edge[1];
-            int length = edge[2];
-            unionSet.union(start, end);
-            if (unionSet.connect(0, m * n - 1)) {
-                return length;
+        pq.offer(new int[]{0, 0, 0});
+
+        int[] dist = new int[m * n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[0] = 0;
+        boolean[] seen = new boolean[m * n];
+
+        while (!pq.isEmpty()) {
+            int[] edge = pq.poll();
+            int x = edge[0], y = edge[1], d = edge[2];
+            int id = x * n + y;
+            if (seen[id]) {
+                continue;
+            }
+            if (x == m - 1 && y == n - 1) {
+                break;
+            }
+            seen[id] = true;
+            for (int i = 0; i < 4; ++i) {
+                int nx = x + dirs[i][0];
+                int ny = y + dirs[i][1];
+                if (nx >= 0 && nx < m && ny >= 0 && ny < n && Math.max(d, Math.abs(heights[x][y] - heights[nx][ny])) < dist[nx * n + ny]) {
+                    dist[nx * n + ny] = Math.max(d, Math.abs(heights[x][y] - heights[nx][ny]));
+                    pq.offer(new int[]{nx, ny, dist[nx * n + ny]});
+                }
             }
         }
-        return 1;
+
+        return dist[m * n - 1];
     }
 
-    public class UnionSet {
-        int[] parent;
-        int[] rank;
-        int count;
 
-        public UnionSet(int n) {
-            parent = new int[n];
-            rank = new int[n];
-            count = n;
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-                rank[i] = 1;
-            }
-        }
-
-        public int find(int x) {
-            return x == parent[x] ? x : (parent[x] = find(parent[x]));
-        }
-
-        public boolean union(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-            if (rootX == rootY) return false;
-            if (rank[rootX] > rank[rootY]) {
-                parent[rootY] = rootX;
-            } else if (rank[rootX] < rank[rootY]) {
-                parent[rootX] = rootY;
-            } else {
-                parent[rootX] = rootY;
-                rank[rootY]++;
-            }
-            count--;
-            return true;
-        }
-
-        public boolean connect(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-            if (rootX == rootY) return true;
-            return false;
-        }
-    }
 }
