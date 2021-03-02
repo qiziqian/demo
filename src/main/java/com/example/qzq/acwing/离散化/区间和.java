@@ -30,48 +30,43 @@ public class 区间和 {
         int n = sc.nextInt();
         int m = sc.nextInt();
         int N = 300010;
-        int[] a = new int[N];
-        int[] s = new int[N];
-
-        List<Integer> alls = new ArrayList<>();
+        List<Integer> all = new ArrayList<>();
         List<int[]> add = new ArrayList<>();
         List<int[]> query = new ArrayList<>();
-
+        int[] a = new int[N];
+        int[] b = new int[N];
         for (int i = 0; i < n; i++) {
-            int x = sc.nextInt();
-            int c = sc.nextInt();
+            int x = sc.nextInt(), c = sc.nextInt();
             add.add(new int[]{x, c});
-            alls.add(x);
+            all.add(x);
         }
-
         for (int i = 0; i < m; i++) {
             int l = sc.nextInt();
             int r = sc.nextInt();
+            all.add(l);
+            all.add(r);
             query.add(new int[]{l, r});
-            alls.add(l);
-            alls.add(r);
         }
 
-        Collections.sort(alls);
-        int unique = unique(alls);
-        alls = alls.subList(0, unique);
+        Collections.sort(all);
+        int last = unique(all);
+        List<Integer> list = all.subList(0, last);
 
-        for (int[] item : add) {
-            int index = find(item[0], alls);
-            a[index] += item[1];
+        for (int[] ints : add) {
+            int i = find(list, ints[0]);
+            a[i + 1] += ints[1];
+        }
+        for (int i = 1; i <= list.size(); i++) {
+            b[i] = b[i - 1] + a[i];
+        }
+        for (int[] ints : query) {
+            int l = find(list, ints[0]);
+            int r = find(list, ints[1]);
+            System.out.println(b[r + 1] - b[l] + " ");
         }
 
-        //求前缀和
-        for (int i = 1; i <= alls.size(); i++) s[i] = s[i - 1] + a[i];
-
-        for (int[] item : query) {
-            int l = find(item[0], alls);
-            int r = find(item[1], alls);
-            System.out.println(s[r] - s[l - 1]);
-        }
     }
 
-    //去重
     static int unique(List<Integer> list) {
         int j = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -83,18 +78,14 @@ public class 区间和 {
         return j;
     }
 
-    static int find(int x, List<Integer> list) {
-        int l = 0;
-        int r = list.size() - 1;
+    static int find(List<Integer> list, int x) {
+        int l = 0, r = list.size() - 1;
         while (l < r) {
             int mid = l + r >> 1;
-            if (list.get(mid) >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
+            if (list.get(mid) >= x) r = mid;
+            else l = mid + 1;
         }
-        return l + 1; //因为要考虑到前缀和
+        return l;
     }
 }
 
