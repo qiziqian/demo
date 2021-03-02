@@ -1,8 +1,6 @@
 package com.example.qzq.leetcode;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName : 字符串的排列
@@ -13,9 +11,15 @@ import java.util.Map;
 public class 字符串的排列 {
     public static void main(String[] args) {
 
-        System.out.println(checkInclusion("ab", "eidboaoo"));
-        System.out.println(checkInclusion("ab", "eidbaooo"));
-        System.out.println(checkInclusion("adc", "dcda"));
+//        System.out.println(checkInclusion("ab", "eidboaoo"));
+//        System.out.println(checkInclusion("ab", "eidbaooo"));
+//        System.out.println(checkInclusion("adc", "dcda"));
+        String s = "abca";
+        int mask = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            mask |= (1 << c - 'a');
+        }
     }
 
     public static boolean checkInclusion(String s1, String s2) {
@@ -36,6 +40,33 @@ public class 字符串的排列 {
             right++;
         }
         return false;
+    }
+
+
+    public static List<Integer> findNumOfValidWords(String[] words, String[] puzzles) {
+        Map<Integer, Integer> frequency = new HashMap<Integer, Integer>();
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < words.length; i++) {
+            int mask = 0;
+            for (int j = 0; j < words[i].length(); j++) {
+                mask |= 1 << words[i].charAt(j) - 'a';
+            }
+            frequency.put(mask, frequency.getOrDefault(mask, 0) + 1);
+        }
+
+        for (int i = 0; i < puzzles.length; i++) {
+            int target = 0;
+            for (int j = 0; j < puzzles[i].length(); j++) {
+                target |= 1 << puzzles[i].charAt(j) - 'a';
+            }
+            int cnt = 0;
+            int first = 1 << puzzles[i].charAt(0) - 'a';
+            for (int j = target; j != 0; j = target & (j - 1)) {
+                if ((j & first) != 0) cnt += frequency.getOrDefault(j, 0);
+            }
+            list.add(cnt);
+        }
+        return list;
     }
 
 }
