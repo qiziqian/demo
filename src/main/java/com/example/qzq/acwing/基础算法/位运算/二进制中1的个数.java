@@ -1,6 +1,4 @@
-package com.example.qzq.acwing.位运算;
-
-import java.util.Scanner;
+package com.example.qzq.acwing.基础算法.位运算;
 
 /**
  * @ClassName : 二进制中1的个数

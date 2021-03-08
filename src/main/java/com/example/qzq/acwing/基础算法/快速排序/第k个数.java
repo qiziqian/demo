@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.快速排序;
+package com.example.qzq.acwing.基础算法.快速排序;
 
 import java.util.*;
 

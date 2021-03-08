@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.高精度;
+package com.example.qzq.acwing.基础算法.高精度;
 
 import java.io.BufferedReader;
 import java.io.IOException;

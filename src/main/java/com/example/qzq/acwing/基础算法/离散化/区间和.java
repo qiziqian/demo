@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.离散化;
+package com.example.qzq.acwing.基础算法.离散化;
 
 import java.util.ArrayList;
 import java.util.Collections;

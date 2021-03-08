@@ -1,6 +1,5 @@
-package com.example.qzq.acwing.二分;
+package com.example.qzq.acwing.基础算法.二分;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**

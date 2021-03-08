@@ -1,53 +1,54 @@
-package com.example.qzq.acwing.高精度;
-
+package com.example.qzq.acwing.基础算法.高精度;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * @ClassName : 高精度乘法
+ * @ClassName : 高精度除法
  * @Author : qiziqian
  * @Description:
- * @Date: 2021-02-25 16:56
+ * @Date: 2021-02-25 17:25
  */
-public class 高精度乘法 {
+public class 高精度除法 {
+
     /*
+    高精度整数 /低精度整数
 
-    高精度整数 * 低精度整数
-      初始化步骤与加法一样
-      后 续步骤:
-       res[i] = (A[i] *B+进位)%10;
-       进位 =(A[i] *B+进位)/10;
+    除法运算适合从首位开始,但是由于在多数问题里,经常会出现加减乘除混合运算,因此也倒序处理
+     */
+    static int r = 0;
 
-   */
     public static void main(String[] args) throws IOException {
         BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
         String s1 = cin.readLine().split(" ")[0];
         String s2 = cin.readLine().split(" ")[0];
         int[] a = transform(s1);
         int b = Integer.parseInt(s2);
-        List<Integer> res = mul(a, b);
+        List<Integer> res = div(a, b);
 
         //去掉前面的0
         while (res.size() > 1 && res.get(res.size() - 1) == 0) res.remove(res.size() - 1);
         for (int i = res.size() - 1; i >= 0; i--) {
             System.out.print(res.get(i));
         }
+        System.out.println(r);
     }
 
 
-    public static List<Integer> mul(int[] a, int b) {
+    public static List<Integer> div(int[] a, int b) {
         int m = 0;
         List<Integer> res = new ArrayList<>();
-        for (int i = 0; i < a.length; i++) {
-            m += a[i] * b;
-            res.add(m % 10);
-            m = m / 10;
+        for (int i = a.length - 1; i >= 0; i--) {
+            m = m * 10 + a[i];
+            res.add(m / b);
+            m %= b;
         }
-        if (m > 0) res.add(m);
+        Collections.reverse(res);
+        r = m;
         return res;
     }
 
@@ -59,5 +60,4 @@ public class 高精度乘法 {
         }
         return nums;
     }
-
 }
