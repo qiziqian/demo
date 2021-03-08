@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class 二进制中1的个数 {
 
+
     public static void main(String[] args) {
 //        Scanner scanner = new Scanner(System.in);
 //        int n = scanner.nextInt();
