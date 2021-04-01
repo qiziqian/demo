@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.双指针;
+package com.example.qzq.acwing.基础算法.双指针;
 
 import java.util.Scanner;
 

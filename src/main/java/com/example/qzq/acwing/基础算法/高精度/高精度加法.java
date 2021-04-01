@@ -1,54 +1,47 @@
-package com.example.qzq.acwing.高精度;
+package com.example.qzq.acwing.基础算法.高精度;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * @ClassName : 高精度除法
+ * @ClassName : 大整数相加
  * @Author : qiziqian
  * @Description:
- * @Date: 2021-02-25 17:25
+ * @Date: 2021-02-25 09:56
  */
-public class 高精度除法 {
+public class 高精度加法 {
+
 
     /*
-    高精度整数 /低精度整数
-
-    除法运算适合从首位开始,但是由于在多数问题里,经常会出现加减乘除混合运算,因此也倒序处理
+     例如 "123456789" + "123456789"
+    1.借用数组倒叙存储 ,然后相加,满十进一即可
+    2.
      */
-    static int r = 0;
-
     public static void main(String[] args) throws IOException {
         BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
         String s1 = cin.readLine().split(" ")[0];
         String s2 = cin.readLine().split(" ")[0];
         int[] a = transform(s1);
-        int b = Integer.parseInt(s2);
-        List<Integer> res = div(a, b);
-
-        //去掉前面的0
-        while (res.size() > 1 && res.get(res.size() - 1) == 0) res.remove(res.size() - 1);
+        int[] b = transform(s2);
+        List<Integer> res = add(a, b);
         for (int i = res.size() - 1; i >= 0; i--) {
             System.out.print(res.get(i));
         }
-        System.out.println(r);
     }
 
-
-    public static List<Integer> div(int[] a, int b) {
-        int m = 0;
+    public static List<Integer> add(int[] a, int[] b) {
+        int add = 0;
         List<Integer> res = new ArrayList<>();
-        for (int i = a.length - 1; i >= 0; i--) {
-            m = m * 10 + a[i];
-            res.add(m / b);
-            m %= b;
+        for (int i = 0; i < Math.max(a.length, b.length); i++) {
+            if (i < a.length) add += a[i];
+            if (i < b.length) add += b[i];
+            res.add(add % 10);
+            add /= 10;
         }
-        Collections.reverse(res);
-        r = m;
+        if (add == 1) res.add(1);
         return res;
     }
 

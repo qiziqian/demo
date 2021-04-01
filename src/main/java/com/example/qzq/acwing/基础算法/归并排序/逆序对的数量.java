@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.归并排序;
+package com.example.qzq.acwing.基础算法.归并排序;
 
 import java.util.Scanner;
 

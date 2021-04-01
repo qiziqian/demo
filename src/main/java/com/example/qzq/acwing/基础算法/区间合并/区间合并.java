@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.区间合并;
+package com.example.qzq.acwing.基础算法.区间合并;
 
 import java.util.*;
 
@@ -39,4 +39,5 @@ public class 区间合并 {
         }
         System.out.println(res.size());
     }
+
 }
