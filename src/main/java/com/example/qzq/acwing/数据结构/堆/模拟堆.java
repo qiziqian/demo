@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.数据结构.堆排序;
+package com.example.qzq.acwing.数据结构.堆;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

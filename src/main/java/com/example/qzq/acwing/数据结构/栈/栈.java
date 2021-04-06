@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.数据结构;
+package com.example.qzq.acwing.数据结构.栈;
 
 import java.io.BufferedReader;
 import java.io.IOException;

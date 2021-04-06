@@ -10,11 +10,12 @@ import lombok.Data;
  */
 @Data
 public class LongObject {
-    //   占用堆内存 24   (8 markword 8 klass  +4引用 +4引用)
-    // 4个字节的引用   占用总内存 24   (24 +24 +24)
+
+
+    //   占用堆内存 24   (8 markword +  8 klass  +4引用 +4引用)
     Long test1;
-    Long test2;
-    //8个字节的实际类型
-    //   long test1;
-    //   long test2;
+    //  占用总内存 40  4个字节的引用  + 8 markword +  8 klass + 24
+
+
+    // Long test2;
 }

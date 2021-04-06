@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.数据结构;
+package com.example.qzq.acwing.数据结构.链表;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

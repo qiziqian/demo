@@ -1,6 +1,5 @@
-package com.example.qzq.acwing.数据结构.堆排序;
+package com.example.qzq.acwing.数据结构.堆;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**

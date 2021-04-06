@@ -15,22 +15,31 @@ public class SizeOf {
 
 
     public static void main(String[] args) {
-        //getSizeOfOne();
-        getSizeOfOneHundred();
-
+        getSizeOfBasic();
+        getSizeOfWrapper();
     }
 
-    static void getSizeOfOne() {
+    static void getSizeOfBasic() {
+        LongObject2 longObject = new LongObject2();
+        longObject.setTest1(1L);
+        System.out.println("------------基本类型----------");
+        System.out.println("占用的堆内存: " + RamUsageEstimator.shallowSizeOf(longObject));
+        System.out.println("占用的总内存: " + RamUsageEstimator.humanSizeOf(longObject));
+    }
+
+    static void getSizeOfWrapper() {
+        LongObject longObject = new LongObject();
+        longObject.setTest1(1L);
+        System.out.println("------------包装类型----------");
+        System.out.println("占用的堆内存: " + RamUsageEstimator.shallowSizeOf(longObject));
+        System.out.println("占用的总内存: " + RamUsageEstimator.humanSizeOf(longObject));
+    }
+
+    static void getSizeOfOneMap() {
         HashMap<Long, Long> longMap = new HashMap<>();
         longMap.put(1L, 2L);
         longMap.put(3L, 4L);
         longMap.put(5L, 6L);
-        LongObject longObject = new LongObject();
-        longObject.setTest1(1L);
-        longObject.setTest2(2L);
-        System.out.println("------------longObject----------");
-        System.out.println("占用的堆内存: " + RamUsageEstimator.shallowSizeOf(longObject));
-        System.out.println("占用的总内存: " + RamUsageEstimator.humanSizeOf(longObject));
         System.out.println("------------longMap----------");
         System.out.println("占用的堆内存: " + RamUsageEstimator.shallowSizeOf(longMap));
         System.out.println("占用的总内存: " + RamUsageEstimator.humanSizeOf(longMap));
@@ -40,7 +49,7 @@ public class SizeOf {
         System.out.println("------------longObject array----------");
         LongObject longObject = new LongObject();
         longObject.setTest1(1L);
-        longObject.setTest2(2L);
+        //longObject.setTest2(2L);
         LongObject[] array = new LongObject[100];
         ArrayList<LongObject> list = new ArrayList<>();
         ArrayList<LongObject> list2 = new ArrayList<>();

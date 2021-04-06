@@ -42,9 +42,9 @@ public class 二进制中1的个数 {
     public static int getBinaryK(int n, int k) {
         return n >> k & 1;
     }
+
     //返回数字的最后一位1   作用:计算二进制中1的个数
     // -x = ~x+1
-
     public static int getLowBit(int x) {
         return x & -x;
     }
