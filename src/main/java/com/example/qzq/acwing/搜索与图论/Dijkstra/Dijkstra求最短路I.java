@@ -36,9 +36,23 @@ public class Dijkstra求最短路I {
         System.out.println(dijkstra());
     }
 
+    /*
+    dijkstra 单源最短路径算法,基于贪心和bfs
+            1.初始化:
+            图中所有到不了的点为正无穷       g[i][j]=Integer.MAX_VALUE
+            起点到所有点的距离为正无穷       d[i]=Integer.MAX_VALUE
+            起点到自己的距离为0            d[1]=0
+            起点到所有点的最小距离均未确定   st[i]=false
+
+            2.找到离起点最近的,最短距离没有确定的一个点
+            根据这个点,更新起点到其他点的距离
+
+            3.返回起点到目标点的距离
+     */
+
     public static int dijkstra() {
         int[] d = new int[n + 1];
-        boolean[] st = new boolean[n];
+        boolean[] st = new boolean[n + 1];
         Arrays.fill(d, maxLength);
         d[1] = 0;
         for (int i = 0; i < n; i++) {

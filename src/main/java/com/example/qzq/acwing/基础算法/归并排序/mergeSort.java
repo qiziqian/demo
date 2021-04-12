@@ -38,25 +38,4 @@ public class mergeSort {
     public static void main(String[] args) {
         mergeSort(new int[]{99, 51, 84, 48, 76, 42, 6, 6, 38, 10}, 0, 9);
     }
-
-    public int maxSatisfied(int[] customers, int[] grumpy, int X) {
-        int n = customers.length;
-        int min = 0;
-        for (int i = 0; i < n; i++) {
-            if (grumpy[i] == 0) min += customers[i];
-        }
-        int increase = 0;
-        for (int i = 0; i < X; i++) {
-            if (grumpy[i] == 1) increase += customers[i];
-        }
-        int maxIncrease = increase;
-        for (int i = X; i < n; i++) {
-            if (grumpy[i] == 1) increase += customers[i];
-            if (grumpy[i - X] == 1) increase -= customers[i];
-            maxIncrease = Math.max(maxIncrease, increase);
-        }
-
-        return min + maxIncrease;
-    }
-
 }
