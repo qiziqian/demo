@@ -24,7 +24,6 @@ public class KMP {
         int n = p.length();
         int m = s.length();
 
-
         //匹配自己,从1开始
         for (int i = 1, j = 0; i < n; i++) {
             while (j != 0 && p.charAt(i) != p.charAt(j)) j = ne[j - 1];

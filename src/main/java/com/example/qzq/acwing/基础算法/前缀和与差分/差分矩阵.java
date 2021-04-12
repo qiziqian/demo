@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.前缀和与差分;
+package com.example.qzq.acwing.基础算法.前缀和与差分;
 
 import java.util.Scanner;
 

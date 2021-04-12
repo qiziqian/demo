@@ -1,4 +1,4 @@
-package com.example.qzq.acwing.Dijkstra;
+package com.example.qzq.acwing.搜索与图论.Dijkstra;
 
 import java.util.Arrays;
 import java.util.Scanner;
