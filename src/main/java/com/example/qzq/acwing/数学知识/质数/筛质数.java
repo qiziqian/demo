@@ -47,6 +47,7 @@ public class 筛质数 {
      * @Description 线性筛法(欧拉筛法)
      * 时间复杂度O()
      * 只需要把所有质数的倍数都筛掉,剩下的就是质数的数量
+     *      第二层for循环中,第一次筛掉含有质因数2的,第二次筛掉含有质因数3的,第k次筛掉含有质因数k的....
      * @Date 2021/4/17
      **/
     private static int getPrimeCount2(int n) {

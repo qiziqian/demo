@@ -5,13 +5,12 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * @ClassName : 约数个数
+ * @ClassName : 约数之和
  * @Author : qiziqian
- * @Description: 所有int范围内的数, 最多的约数个数是1600多
- * @Date: 2021-04-19 10:19
+ * @Description:
+ * @Date: 2021-04-19 11:26
  */
-public class 约数个数 {
-
+public class 约数之和 {
 
     static Map<Integer, Integer> primes = new HashMap<>();
 
@@ -26,13 +25,20 @@ public class 约数个数 {
 
         long mod = (long) (1e9 + 7);
         long res = 1;
-        for (Integer value : primes.values()) {
-            res *= (value + 1);
+        for (Integer i : primes.keySet()) {
+            Integer c = primes.get(i);
+            long sum = 1;
+            while (c-- > 0) {
+                sum = i * sum + 1;
+                sum %= mod;
+            }
+            res *= sum;
             res %= mod;
         }
 
         System.out.println(res);
     }
+
 
     public static void getYueShuCount(int x) {
         for (int i = 2; i <= x / i; i++) {
@@ -44,6 +50,5 @@ public class 约数个数 {
         }
         if (x > 1) primes.put(x, primes.getOrDefault(x, 0) + 1);
     }
-
 
 }
